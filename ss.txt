@@ -1,0 +1,59 @@
+import java.math.BigInteger;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Scanner;
+public class Main {
+	static Comparator<BigInteger> cmp = new Comparator<BigInteger>(){
+		public int compare(BigInteger x, BigInteger y) {
+			return -x.compareTo(y);
+		}
+	};
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		Queue<BigInteger> p = new PriorityQueue<BigInteger>(2020);
+		Queue<BigInteger> q = new PriorityQueue<BigInteger>(2020,cmp);
+		int n = sc.nextInt();
+		for(int i=0;i<n;i++){
+			BigInteger x = sc.nextBigInteger();
+			p.add(x);
+			q.add(x);
+		}
+		while(p.size()>1){
+			BigInteger a = p.poll();
+			BigInteger b = p.poll();
+			p.add(a.multiply(b).add(BigInteger.valueOf(1)));
+		}
+		BigInteger pp = p.poll();
+		while(q.size()>1){
+			BigInteger a = q.poll();
+			BigInteger b = q.poll();
+			q.add(a.multiply(b).add(BigInteger.valueOf(1)));
+		}
+		BigInteger qq = q.poll();
+		int count=0;
+		BigInteger x = pp.subtract(qq);
+		BigInteger ans=x;
+		if(x.compareTo(BigInteger.valueOf(0))==0)
+		{
+			count=1;
+		}	
+		else {
+			while(x.compareTo(BigInteger.valueOf(0))>0){
+				x = x.divide(BigInteger.valueOf(10));
+				count++;
+			}
+		}
+		System.out.println(count);
+		System.out.println(ans);
+	}
+}
+
+
+/***************************************************
+User name: zhxw150237ÂíÑ§½¿
+Result: Accepted
+Take time: 568ms
+Take Memory: 30592KB
+Submit time: 2018-06-03 22:11:58
+****************************************************/
